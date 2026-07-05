@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>暖心時刻 | 減糖無負擔手作甜點</title>
+  
+  <!-- 引入 Tailwind CSS 與 Flowbite 基礎 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入 Bootstrap 5 (為部分經典排版與工具類提供支持) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 引入 Flowbite CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet">
+  <!-- Google Fonts: 引入優雅的 Noto Sans TC 與 Playfair Display -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind 客製化顏色設定 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            milktea: '#E6D5C3',      /* 溫暖的奶茶色 */
+            elegantwhite: '#FDFBF7', /* 優雅的文青白 */
+            walnut: '#4A3B32',       /* 深胡桃色 (主文字色) */
+            walnutlight: '#725C4E',  /* 次要胡桃色 */
+            warmcream: '#F4ECE1',    /* 暖乳霜色 (輔助底色) */
+          },
+          fontFamily: {
+            sans: ['Noto Sans TC', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 全域字體與背景基本設定 */
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      color: #4A3B32;
+      background-color: #FDFBF7;
+    }
+    
+    /* 平滑過渡動畫 */
+    .transition-all-custom {
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-elegantwhite text-walnut">
+
+  <!-- ==========================================
+       導覽列 (Navigation)
+       ========================================== -->
+  <nav class="bg-elegantwhite/90 backdrop-blur-md border-b border-milktea sticky top-0 z-40 px-4 py-3">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <a href="#" class="flex items-center space-x-2">
+        <span class="font-serif text-2xl font-bold tracking-wider text-walnut">暖心時刻 <span class="text-sm font-sans font-light text-walnutlight">| Handcrafted</span></span>
+      </a>
+      <div class="hidden md:flex space-x-8 text-sm font-medium">
+        <a href="#features" class="hover:text-milktea transition-all-custom">極致工藝</a>
+        <a href="#story" class="hover:text-milktea transition-all-custom">初心故事</a>
+        <a href="#pricing" class="hover:text-milktea transition-all-custom">精選方案</a>
+        <a href="#testimonials" class="hover:text-milktea transition-all-custom">溫暖評價</a>
+      </div>
+      <div>
+        <button onclick="openOrderModal('主推免運組 $990')" class="bg-walnut hover:bg-walnutlight text-elegantwhite px-5 py-2 rounded-full text-sm font-medium shadow-sm transition-all-custom">
+          立即預訂
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       1. Hero Section (左右雙欄)
+       ========================================== -->
+  <section class="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-warmcream to-elegantwhite">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="row align-items-center g-5">
+        <!-- 左欄：文案與按鈕 -->
+        <div class="col-lg-6 text-center text-lg-start">
+          <span class="inline-block px-3 py-1 bg-milktea/40 text-walnut text-xs font-semibold rounded-full mb-4 tracking-wider">
+            減糖 60% • 靜岡濃郁起司新登場
+          </span>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold font-serif leading-tight text-walnut mb-6">
+            每一口，都是對身體的<br>
+            <span class="text-walnutlight underline decoration-milktea decoration-wavy">溫柔款待</span>
+          </h1>
+          <p class="text-base md:text-lg text-walnutlight mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            我們堅持不使用防腐劑與人造化學物，改用天然海藻糖取代精製糖，
+            保留頂級食材的純粹原味。讓美味與輕盈，不再需要妥協。
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+            <!-- 立即下單按鈕 (開啟 Order Modal) -->
+            <button onclick="openOrderModal('主推免運組 $990')" class="w-full sm:w-auto bg-walnut hover:bg-walnutlight text-elegantwhite text-base font-semibold px-8 py-3.5 rounded-lg shadow-lg hover:shadow-xl transition-all-custom flex items-center justify-center space-x-2">
+              <span>立即享受甜點</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+            <!-- LINE 領券按鈕 (開啟 LINE Modal) -->
+            <button onclick="openLineModal()" class="w-full sm:w-auto bg-[#06C755] hover:bg-[#05b04b] text-white text-base font-semibold px-8 py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all-custom flex items-center justify-center space-x-2">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.564.39.084.922.258 1.057.592.12.3.075.765.037 1.066l-.159 1.019c-.048.3-.228 1.179 1.014.644 1.243-.538 6.69-3.939 9.129-6.75 1.701-1.899 2.886-3.999 2.886-6.135zm-15.111 3.253h-1.554v-3.791h-.032l-1.637 3.791h-1.045l-1.637-3.791h-.032v3.791h-1.554v-5.632h1.996l1.71 3.96h.032l1.71-3.96h1.996v5.632zm4.123 0h-1.554v-5.632h1.554v5.632zm3.874 0h-1.428l-2.455-3.666h-.032v3.666h-1.554v-5.632h1.428l2.455 3.666h.032v-3.666h1.554v5.632zm3.844-4.148h-2.186v1.17h2.186v1.312h-2.186v1.354h2.186v1.312h-3.74v-5.632h3.74v1.312z"/></svg>
+              <span>LINE 領取 $100 優惠券</span>
+            </button>
+          </div>
+        </div>
+        <!-- 右欄：甜點視覺意象 SVG -->
+        <div class="col-lg-6">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            <!-- 背景裝飾圓框 -->
+            <div class="absolute -top-6 -left-6 w-72 h-72 bg-milktea/30 rounded-full blur-3xl -z-10"></div>
+            <div class="absolute -bottom-6 -right-6 w-72 h-72 bg-walnut/10 rounded-full blur-3xl -z-10"></div>
+            
+            <!-- 精緻的手繪風手作甜點 SVG 插圖 -->
+            <svg class="w-full h-auto drop-shadow-xl" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="50" y="320" width="400" height="20" rx="10" fill="#E6D5C3" />
+              <path d="M120 320 L150 140 L350 140 L380 320 Z" fill="#F4ECE1" stroke="#4A3B32" stroke-width="4" />
+              <path d="M100 140 C100 100, 400 100, 400 140 Z" fill="#E6D5C3" stroke="#4A3B32" stroke-width="4" />
+              <!-- 草莓裝飾 -->
+              <path d="M250 80 C230 80, 230 110, 250 110 C270 110, 270 80, 250 80 Z" fill="#D9534F" />
+              <path d="M250 80 Q250 70 255 65" stroke="#5CB85C" stroke-width="3" stroke-linecap="round" />
+              <!-- 甜點層次線條 -->
+              <path d="M135 230 C 180 210, 320 250, 365 230" stroke="#4A3B32" stroke-width="4" stroke-linecap="round" />
+              <path d="M128 275 C 180 260, 320 300, 372 275" stroke="#4A3B32" stroke-width="4" stroke-linecap="round" />
+              <!-- 點綴粒子 -->
+              <circle cx="180" cy="180" r="4" fill="#4A3B32" />
+              <circle cx="320" cy="190" r="4" fill="#4A3B32" />
+              <circle cx="250" cy="210" r="5" fill="#4A3B32" />
+            </svg>
+            
+            <div class="absolute bottom-4 right-4 bg-elegantwhite border border-milktea p-4 rounded-xl shadow-lg flex items-center space-x-3">
+              <span class="flex h-3 w-3 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-walnut opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-walnut"></span>
+              </span>
+              <span class="text-xs font-semibold text-walnut">今日僅剩 17 組冷凍庫存</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       2. Feature Section (3欄格子介紹)
+       ========================================== -->
+  <section id="features" class="py-16 bg-elegantwhite">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-3xl font-serif font-bold text-walnut mb-4">我們對純粹的極致追求</h2>
+        <div class="h-1 w-20 bg-milktea mx-auto mb-4"></div>
+        <p class="text-walnutlight">從原料採購到包裝配送，我們在每一個細節中都揉入了誠意與健康思維。</p>
+      </div>
+      
+      <div class="row g-4">
+        <!-- 卡片 1：180大卡 -->
+        <div class="col-md-4">
+          <div class="p-8 bg-warmcream/40 rounded-2xl border border-milktea/50 text-center hover:shadow-md transition-all-custom h-full flex flex-col justify-between">
+            <div>
+              <div class="w-16 h-16 bg-milktea/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-walnut" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+              </div>
+              <h3 class="text-xl font-bold text-walnut mb-3">單片僅 180 大卡</h3>
+              <p class="text-sm text-walnutlight leading-relaxed">
+                利用日本研發天然海藻糖，大幅降低卡路里，控卡期間也能安心享用，不再有吃甜食的罪惡感。
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 卡片 2：進口起司 -->
+        <div class="col-md-4">
+          <div class="p-8 bg-warmcream/40 rounded-2xl border border-milktea/50 text-center hover:shadow-md transition-all-custom h-full flex flex-col justify-between">
+            <div>
+              <div class="w-16 h-16 bg-milktea/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-walnut" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h2m4-3.5a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+              <h3 class="text-xl font-bold text-walnut mb-3">100% 頂級進口乳酪</h3>
+              <p class="text-sm text-walnutlight leading-relaxed">
+                嚴選法國與日本北海道進口起司，黃金比例混合調配，創造如絲綢般滑順、濃郁不膩口的醇厚乳香。
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 卡片 3：冷凍宅配 -->
+        <div class="col-md-4">
+          <div class="p-8 bg-warmcream/40 rounded-2xl border border-milktea/50 text-center hover:shadow-md transition-all-custom h-full flex flex-col justify-between">
+            <div>
+              <div class="w-16 h-16 bg-milktea/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-walnut" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+              <h3 class="text-xl font-bold text-walnut mb-3">低溫急速冷凍宅配</h3>
+              <p class="text-sm text-walnutlight leading-relaxed">
+                出爐後立即進入零下 18 度急速冷凍，完美鎖住剛出爐的濕潤質地，新鮮直送到家，解凍即食。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       3. Content Section (交錯圖文痛點與解方)
+       ========================================== -->
+  <section id="story" class="py-16 bg-warmcream/20">
+    <div class="max-w-6xl mx-auto px-4">
+      
+      <!-- 第一列：身材管理痛點 -->
+      <div class="row align-items-center g-5 mb-16">
+        <div class="col-md-6 order-md-2">
+          <div class="ps-md-8">
+            <span class="text-sm font-semibold tracking-wider text-walnutlight uppercase">The Problem</span>
+            <h3 class="text-3xl font-serif font-bold text-walnut mt-2 mb-4">
+              想吃甜點，卻總在卡路里與罪惡感之間掙扎？
+            </h3>
+            <p class="text-walnutlight leading-relaxed mb-6">
+              市售甜點為了口感，常添加了過量的精製砂糖與反式脂肪。每一次的下午茶時光，在滿足味蕾的背後，往往伴隨著對身體的負擔與揮之不去的自責。難道美味與健康真的無法並存？
+            </p>
+            <ul class="space-y-3">
+              <li class="flex items-center space-x-2 text-sm text-walnut">
+                <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                <span>高精製糖導致精神昏沉與負擔</span>
+              </li>
+              <li class="flex items-center space-x-2 text-sm text-walnut">
+                <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                <span>一片動輒 400 大卡，運動消耗大打折扣</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 order-md-1">
+          <div class="bg-milktea/20 p-4 rounded-3xl border border-milktea">
+            <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" rx="20" fill="#E6D5C3" opacity="0.3"/>
+              <!-- 人物掙扎意象繪圖 -->
+              <circle cx="200" cy="130" r="50" fill="#4A3B32" opacity="0.1"/>
+              <path d="M150 180 Q200 140 250 180" stroke="#4A3B32" stroke-width="4" stroke-linecap="round" fill="none"/>
+              <path d="M180 120 Q185 115 190 120" stroke="#4A3B32" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <path d="M210 120 Q215 115 220 120" stroke="#4A3B32" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <!-- 惡魔小甜點 -->
+              <path d="M180 220 Q200 200 220 220 L215 240 L185 240 Z" fill="#725C4E" />
+              <circle cx="200" cy="205" r="4" fill="#D9534F"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 第二列：產品減糖解方 -->
+      <div class="row align-items-center g-5">
+        <div class="col-md-6">
+          <div class="pe-md-8">
+            <span class="text-sm font-semibold tracking-wider text-walnutlight uppercase">Our Solution</span>
+            <h3 class="text-3xl font-serif font-bold text-walnut mt-2 mb-4">
+              低糖、真材實料，重新定義甜點的真諦
+            </h3>
+            <p class="text-walnutlight leading-relaxed mb-6">
+              我們的甜點配方，是由營養師與專業烘焙師共同研發。我們拿掉了不必要的添加物，改採優質膳食纖維與日本海藻糖，研發出升糖指數低、卻保有綿密滑順口感的重乳酪。讓你吃得優雅，毫無負擔。
+            </p>
+            <ul class="space-y-3">
+              <li class="flex items-center space-x-2 text-sm text-walnut">
+                <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                <span>採用高成本天然甜味劑，溫和代謝</span>
+              </li>
+              <li class="flex items-center space-x-2 text-sm text-walnut">
+                <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                <span>純乳酪無麵粉配方，極致濃醇</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="bg-milktea/20 p-4 rounded-3xl border border-milktea">
+            <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="300" rx="20" fill="#E6D5C3" opacity="0.3"/>
+              <!-- 天使與愛心甜點意象 -->
+              <circle cx="200" cy="140" r="45" fill="#F4ECE1"/>
+              <!-- 愛心圖案 -->
+              <path d="M200 125 C190 110, 170 110, 170 130 C170 150, 200 170, 200 175 C200 170, 230 150, 230 130 C230 110, 210 110, 200 125 Z" fill="#D9534F" />
+              <!-- 光芒閃爍效果 -->
+              <line x1="200" y1="65" x2="200" y2="85" stroke="#4A3B32" stroke-width="3" stroke-linecap="round"/>
+              <line x1="125" y1="140" x2="145" y2="140" stroke="#4A3B32" stroke-width="3" stroke-linecap="round"/>
+              <line x1="255" y1="140" x2="275" y2="140" stroke="#4A3B32" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       4. Pricing Section (方案卡片)
+       ========================================== -->
+  <section id="pricing" class="py-16 bg-elegantwhite">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-3xl font-serif font-bold text-walnut mb-4">預訂今日出爐新鮮風味</h2>
+        <div class="h-1 w-20 bg-milktea mx-auto mb-4"></div>
+        <p class="text-walnutlight">每日新鮮限量手作，提供兩種精緻規格，為您的味蕾準備專屬驚喜。</p>
+      </div>
+
+      <div class="row justify-content-center g-4">
+        <!-- 方案一：單人體驗組 -->
+        <div class="col-md-5">
+          <div class="bg-elegantwhite border-2 border-milktea/50 rounded-3xl p-8 hover:shadow-lg transition-all-custom flex flex-col justify-between h-full">
+            <div>
+              <span class="text-xs font-bold tracking-wider text-walnutlight bg-warmcream px-3 py-1 rounded-full uppercase">個人獨享</span>
+              <h3 class="text-2xl font-serif font-bold text-walnut mt-4 mb-2">單人獨享嚐鮮組</h3>
+              <p class="text-sm text-walnutlight mb-6">適合精緻下午茶，小試健康的完美起點。</p>
+              
+              <div class="flex items-baseline mb-6 border-b border-milktea/30 pb-6">
+                <span class="text-2xl font-bold text-walnut">NT$</span>
+                <span class="text-5xl font-bold text-walnut tracking-tight ml-1">280</span>
+                <span class="text-sm text-walnutlight ml-2">/ 盒 (4入)</span>
+              </div>
+              
+              <ul class="space-y-3 mb-8 text-sm text-walnut">
+                <li class="flex items-center space-x-3">
+                  <svg class="w-5 h-5 text-walnut flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span>經典原味重乳酪 x 4</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                  <svg class="w-5 h-5 text-walnut flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span>減糖海藻糖獨家配方</span>
+                </li>
+                <li class="flex items-center space-x-3 text-gray-400">
+                  <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  <span>未滿 $800 需另計低溫運費 $160</span>
+                </li>
+              </ul>
+            </div>
+            
+            <button onclick="openOrderModal('單人獨享嚐鮮組 $280')" class="w-full py-3 px-4 bg-transparent border-2 border-walnut hover:bg-walnut hover:text-elegantwhite text-walnut font-semibold rounded-xl transition-all-custom">
+              選擇此方案
+            </button>
+          </div>
+        </div>
+
+        <!-- 方案二：主推免運組 (Highlighted) -->
+        <div class="col-md-5">
+          <div class="bg-warmcream border-2 border-walnut rounded-3xl p-8 hover:shadow-xl transition-all-custom flex flex-col justify-between h-full relative">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-walnut text-elegantwhite px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
+              超值推薦 • 免運熱銷
+            </div>
+            
+            <div class="mt-4">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold tracking-wider text-walnutlight bg-milktea/40 px-3 py-1 rounded-full uppercase">家庭聚餐 / 送禮首選</span>
+                <span class="text-xs text-red-600 font-bold bg-red-100 px-2 py-1 rounded">省 $160 運費</span>
+              </div>
+              <h3 class="text-2xl font-serif font-bold text-walnut mt-4 mb-2">主推派對免運分享組</h3>
+              <p class="text-sm text-walnutlight mb-6">辦公室下午茶、親友聚餐首選，免運最划算！</p>
+              
+              <div class="flex items-baseline mb-6 border-b border-walnut/20 pb-6">
+                <span class="text-2xl font-bold text-walnut">NT$</span>
+                <span class="text-5xl font-bold text-walnut tracking-tight ml-1">990</span>
+                <span class="text-sm text-walnutlight ml-2">/ 大盒 (16入)</span>
+              </div>
+              
+              <ul class="space-y-3 mb-8 text-sm text-walnut">
+                <li class="flex items-center space-x-3">
+                  <svg class="w-5 h-5 text-walnut flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span>綜合熱銷口味 x 16 (原味/靜岡茶/可可)</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                  <svg class="w-5 h-5 text-walnut flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span>精美手工手提袋 & 餐具套組</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                  <svg class="w-5 h-5 text-walnut flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span class="font-bold">全台低溫黑貓冷凍宅配免運費</span>
+                </li>
+              </ul>
+            </div>
+            
+            <button onclick="openOrderModal('主推免運分享組 $990')" class="w-full py-3.5 px-4 bg-walnut hover:bg-walnutlight text-elegantwhite font-semibold rounded-xl shadow-md transition-all-custom">
+              立即預訂 (免運費)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       5. Testimonial Section (好評卡片)
+       ========================================== -->
+  <section id="testimonials" class="py-16 bg-warmcream/20">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-3xl font-serif font-bold text-walnut mb-4">感受味蕾的溫暖悸動</h2>
+        <div class="h-1 w-20 bg-milktea mx-auto mb-4"></div>
+        <p class="text-walnutlight">來自全台美食愛好者的真實回饋，因為健康，所以我們更長久相伴。</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- 好評 1 -->
+        <div class="col-md-4">
+          <div class="bg-elegantwhite p-8 rounded-2xl border border-milktea/40 shadow-sm hover:shadow-md transition-all-custom h-full flex flex-col justify-between">
+            <div>
+              <!-- 評分星星 -->
+              <div class="flex text-yellow-400 mb-4">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <p class="text-sm italic text-walnutlight leading-relaxed mb-6">
+                「本來對減糖甜點不抱期待，但這款重乳酪完全驚艷到我！口感無敵綿密滑順，起司味非常濃郁，卻一點都不死甜，吃完也完全不會口乾舌燥。大推！」
+              </p>
+            </div>
+            <div class="flex items-center space-x-3 border-t border-milktea/20 pt-4">
+              <div class="w-10 h-10 bg-milktea/50 rounded-full flex items-center justify-center font-bold text-walnut text-sm">
+                林
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-walnut">林小姐 / 瑜珈老師</h4>
+                <p class="text-xs text-walnutlight">購買項目：主推免運分享組</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 好評 2 -->
+        <div class="col-md-4">
+          <div class="bg-elegantwhite p-8 rounded-2xl border border-milktea/40 shadow-sm hover:shadow-md transition-all-custom h-full flex flex-col justify-between">
+            <div>
+              <div class="flex text-yellow-400 mb-4">
+                <!-- 5 星 -->
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <p class="text-sm italic text-walnutlight leading-relaxed mb-6">
+                「平時有在做低碳飲食管理，這款甜點簡直是救星！熱量只有市售的一半不到，吃完不會對身體造成負擔。而且冷凍宅配包裝超貼心，乾淨又衛生。」
+              </p>
+            </div>
+            <div class="flex items-center space-x-3 border-t border-milktea/20 pt-4">
+              <div class="w-10 h-10 bg-milktea/50 rounded-full flex items-center justify-center font-bold text-walnut text-sm">
+                張
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-walnut">張先生 / 軟體工程師</h4>
+                <p class="text-xs text-walnutlight">購買項目：單人獨享嚐鮮組</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 好評 3 -->
+        <div class="col-md-4">
+          <div class="bg-elegantwhite p-8 rounded-2xl border border-milktea/40 shadow-sm hover:shadow-md transition-all-custom h-full flex flex-col justify-between">
+            <div>
+              <div class="flex text-yellow-400 mb-4">
+                <!-- 5 星 -->
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <p class="text-sm italic text-walnutlight leading-relaxed mb-6">
+                「在辦公室揪同事一起訂了免運組，送來的時候大家都在搶！靜岡抹茶起司口味真的太銷魂了，茶香濃郁和起司交融得剛剛好。下次一定會再回購！」
+              </p>
+            </div>
+            <div class="flex items-center space-x-3 border-t border-milktea/20 pt-4">
+              <div class="w-10 h-10 bg-milktea/50 rounded-full flex items-center justify-center font-bold text-walnut text-sm">
+                陳
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-walnut">陳小姐 / 行銷企劃</h4>
+                <p class="text-xs text-walnutlight">購買項目：主推免運分享組</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       6. CTA Section (呼籲行動)
+       ========================================== -->
+  <section class="py-20 bg-gradient-to-b from-elegantwhite to-warmcream">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-walnut mb-6">今天，就對自己好一點</h2>
+      <p class="text-walnutlight text-lg mb-10 max-w-xl mx-auto">
+        每一份甜點都是手工限量新鮮製作，預購搶先安排最快發貨日程，讓溫暖的心意不再等待。
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <button onclick="openOrderModal('主推免運組 $990')" class="w-full sm:w-auto bg-walnut hover:bg-walnutlight text-elegantwhite text-lg font-bold px-10 py-4 rounded-xl shadow-lg transition-all-custom">
+          挑選口味 • 預訂下午茶
+        </button>
+        <button onclick="openLineModal()" class="w-full sm:w-auto bg-[#06C755] hover:bg-[#05b04b] text-white text-lg font-bold px-10 py-4 rounded-xl shadow-md transition-all-custom flex items-center justify-center space-x-2">
+          <span>加入 LINE 領折價券</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       頁尾 (Footer)
+       ========================================== -->
+  <footer class="bg-walnut text-elegantwhite py-12 border-t border-milktea/20">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="row g-4 justify-content-between">
+        <div class="col-md-4">
+          <span class="font-serif text-2xl font-bold tracking-wider">暖心時刻</span>
+          <p class="text-elegantwhite/70 text-sm mt-4 leading-relaxed">
+            我們相信，甜點不只是食物，更是一份心意的傳遞、一個美好午後的溫暖承諾。
+          </p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <h4 class="text-sm font-bold tracking-widest text-milktea uppercase mb-4">聯絡我們</h4>
+          <p class="text-sm text-elegantwhite/70">客服信箱：support@warmmoment.com</p>
+          <p class="text-sm text-elegantwhite/70 mt-1">營業時間：週一至週五 09:00 - 18:00</p>
+        </div>
+      </div>
+      <div class="border-t border-elegantwhite/10 mt-8 pt-8 text-center text-xs text-elegantwhite/50">
+        <p>&copy; 2026 暖心時刻手作甜點. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ==========================================
+       MODAL: 訂單表單 (Order Modal)
+       ========================================== -->
+  <div id="order-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-elegantwhite rounded-3xl shadow-2xl border border-milktea overflow-hidden">
+      <!-- 頂部裝飾條 -->
+      <div class="bg-milktea py-4 px-6 flex justify-between items-center">
+        <h3 class="text-lg font-serif font-bold text-walnut">美味即將啟程</h3>
+        <button onclick="closeOrderModal()" class="text-walnut hover:text-walnutlight p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      
+      <!-- 表單本體 -->
+      <form id="order-form" onsubmit="handleOrderSubmit(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-walnutlight tracking-wider uppercase mb-1">已選購方案</label>
+          <input type="text" id="order-plan" name="plan" readonly class="w-full bg-warmcream/50 border border-milktea rounded-lg px-3 py-2 text-sm font-bold text-walnut focus:outline-none">
+        </div>
+        
+        <div>
+          <label for="order-name" class="block text-xs font-bold text-walnutlight tracking-wider uppercase mb-1">收件人姓名 <span class="text-red-500">*</span></label>
+          <input type="text" id="order-name" name="name" required placeholder="請輸入姓名" class="w-full border border-milktea rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-walnut focus:border-walnut outline-none bg-elegantwhite text-walnut">
+        </div>
+
+        <div>
+          <label for="order-phone" class="block text-xs font-bold text-walnutlight tracking-wider uppercase mb-1">聯絡電話 <span class="text-red-500">*</span></label>
+          <input type="tel" id="order-phone" name="phone" required placeholder="例如：0912345678" class="w-full border border-milktea rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-walnut focus:border-walnut outline-none bg-elegantwhite text-walnut">
+        </div>
+
+        <div>
+          <label for="order-address" class="block text-xs font-bold text-walnutlight tracking-wider uppercase mb-1">冷凍宅配地址 <span class="text-red-500">*</span></label>
+          <textarea id="order-address" name="address" required rows="3" placeholder="請輸入完整收件地址" class="w-full border border-milktea rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-walnut focus:border-walnut outline-none bg-elegantwhite text-walnut"></textarea>
+        </div>
+
+        <div class="bg-warmcream/40 p-3 rounded-lg text-xs text-walnutlight leading-relaxed">
+          💡 提交後系統將為您鎖定今日庫存。我們將發送簡訊通知您匯款帳號，匯款完成後即刻安排出貨。
+        </div>
+
+        <div class="flex space-x-3 pt-2">
+          <button type="button" onclick="closeOrderModal()" class="w-1/2 py-2 border-2 border-milktea text-walnut font-semibold rounded-lg text-sm transition-all-custom">
+            取消
+          </button>
+          <button type="submit" id="order-submit-btn" class="w-1/2 py-2 bg-walnut hover:bg-walnutlight text-elegantwhite font-semibold rounded-lg text-sm transition-all-custom flex items-center justify-center">
+            <span id="order-btn-text">送出預訂單</span>
+            <!-- 載入中動畫 -->
+            <svg id="order-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       MODAL: LINE 領券表單 (LINE ID Modal)
+       ========================================== -->
+  <div id="line-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-elegantwhite rounded-3xl shadow-2xl border border-[#06C755] overflow-hidden">
+      <!-- 頂部裝飾條 -->
+      <div class="bg-[#06C755] py-4 px-6 flex justify-between items-center text-white">
+        <h3 class="text-lg font-serif font-bold">LINE 專屬好友福利</h3>
+        <button onclick="closeLineModal()" class="text-white hover:text-white/80 p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      
+      <!-- 表單本體 -->
+      <form id="line-form" onsubmit="handleLineSubmit(event)" class="p-6 space-y-4">
+        <div class="text-center pb-2">
+          <span class="text-3xl">🎁</span>
+          <h4 class="text-base font-bold text-walnut mt-2">輸入 LINE ID 即領 $100 折價券</h4>
+          <p class="text-xs text-walnutlight mt-1">我們將透過 LINE 自動發送折扣優惠碼至您的帳號</p>
+        </div>
+
+        <div>
+          <label for="line-id" class="block text-xs font-bold text-walnutlight tracking-wider uppercase mb-1">您的 LINE ID <span class="text-red-500">*</span></label>
+          <input type="text" id="line-id" name="line_id" required placeholder="例如：@warmmoment" class="w-full border border-milktea rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-walnut focus:border-walnut outline-none bg-elegantwhite text-walnut">
+        </div>
+
+        <div class="bg-warmcream/40 p-3 rounded-lg text-xs text-walnutlight leading-relaxed">
+          🔒 我們非常重視隱私，您的 LINE ID 僅用於此次優惠券發送與後續專屬客服聯繫，絕不對外洩露。
+        </div>
+
+        <div class="flex space-x-3 pt-2">
+          <button type="button" onclick="closeLineModal()" class="w-1/2 py-2 border-2 border-milktea text-walnut font-semibold rounded-lg text-sm transition-all-custom">
+            取消
+          </button>
+          <button type="submit" id="line-submit-btn" class="w-1/2 py-2 bg-[#06C755] hover:bg-[#05b04b] text-white font-semibold rounded-lg text-sm transition-all-custom flex items-center justify-center">
+            <span id="line-btn-text">立即領取優惠</span>
+            <!-- 載入中動畫 -->
+            <svg id="line-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       TOAST: 客製化高質感提示組件 (取代 alert)
+       ========================================== -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none">
+    <!-- 動態生成的 Toast 會插在這邊 -->
+  </div>
+
+
+  <!-- ==========================================
+       核心運作 JavaScript 邏輯
+       ========================================== -->
+  <script>
+    /**
+     * 【Vibe Coding 教練提醒】
+     * 這裡就是你串接後端 API 的地方！
+     * 如果你未來使用 Google Colab (經由 ngrok 或是 Flask/FastAPI)、
+     * 或是 Supabase Database Webhook，請直接修改這兩個常數。
+     */
+    const ORDER_API_URL = "https://your-backend-api.com/api/order";   /* 預留的訂單接收 API 網址 */
+    const COUPON_API_URL = "https://your-backend-api.com/api/coupon"; /* 預留的領券接收 API 網址 */
+
+    // ----------------------------------------
+    // TOAST 提示訊息功能控制 (取代傳統 Alert)
+    // ----------------------------------------
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      // 設定不同類型的背景色
+      const bgClass = type === 'success' ? 'bg-walnut text-elegantwhite' : 'bg-red-800 text-white';
+      const icon = type === 'success' 
+        ? `<svg class="w-5 h-5 text-milktea" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+        : `<svg class="w-5 h-5 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+
+      toast.className = `flex items-center space-x-3 p-4 rounded-xl shadow-2xl border border-milktea/20 transition-all duration-300 transform translate-y-5 opacity-0 pointer-events-auto ${bgClass}`;
+      toast.innerHTML = `
+        ${icon}
+        <span class="text-sm font-medium">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      // 動態進入動畫
+      setTimeout(() => {
+        toast.classList.remove('translate-y-5', 'opacity-0');
+      }, 50);
+
+      // 4 秒後自動淡出銷毀
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 4000);
+    }
+
+    // ----------------------------------------
+    // Order Modal 顯示/關閉控制
+    // ----------------------------------------
+    function openOrderModal(planName) {
+      document.getElementById('order-plan').value = planName;
+      const modal = document.getElementById('order-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden'; // 防止背景滾動
+    }
+
+    function closeOrderModal() {
+      const modal = document.getElementById('order-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = ''; // 恢復滾動
+    }
+
+    // ----------------------------------------
+    // LINE Modal 顯示/關閉控制
+    // ----------------------------------------
+    function openLineModal() {
+      const modal = document.getElementById('line-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLineModal() {
+      const modal = document.getElementById('line-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    // ----------------------------------------
+    // 異步傳送 POST 請求函數 (含指數補償與錯誤防禦)
+    // ----------------------------------------
+    async function sendRequestWithRetry(url, data, maxRetries = 3) {
+      let delay = 1000; // 初始延遲 1 秒
+      
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          
+          if (response.ok) {
+            return await response.json();
+          }
+          throw new Error(`伺服器回應錯誤碼: ${response.status}`);
+        } catch (error) {
+          if (attempt === maxRetries) {
+            throw error; // 到達最大重試次數，拋出錯誤
+          }
+          // 指數型退避 (Exponential Backoff) 延時
+          await new Promise(resolve => setTimeout(resolve, delay));
+          delay *= 2; 
+        }
+      }
+    }
+
+    // ----------------------------------------
+    // 處理：下單表單提交 (Order Submit)
+    // ----------------------------------------
+    async function handleOrderSubmit(event) {
+      event.preventDefault(); // 阻止瀏覽器預設跳轉
+
+      const plan = document.getElementById('order-plan').value;
+      const name = document.getElementById('order-name').value;
+      const phone = document.getElementById('order-phone').value;
+      const address = document.getElementById('order-address').value;
+
+      // 載入動畫切換
+      const submitBtn = document.getElementById('order-submit-btn');
+      const btnText = document.getElementById('order-btn-text');
+      const spinner = document.getElementById('order-spinner');
+
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      spinner.classList.remove('hidden');
+
+      const orderPayload = {
+        plan_name: plan,
+        customer_name: name,
+        customer_phone: phone,
+        delivery_address: address,
+        created_at: new Date().toISOString()
+      };
+
+      try {
+        // 如果 API 網址尚未設定，我們模擬發送成功 (便於你直接在本地測試效果)
+        if (ORDER_API_URL.includes("your-backend-api.com")) {
+          console.log("[模擬傳送] 訂單資料:", orderPayload);
+          // 模擬延遲一秒
+          await new Promise(resolve => setTimeout(resolve, 1200));
+        } else {
+          await sendRequestWithRetry(ORDER_API_URL, orderPayload);
+        }
+
+        // 成功處理
+        showToast(`🎉 預訂成功！感謝 ${name} 的支持，簡訊通知即將發送！`, 'success');
+        document.getElementById('order-form').reset();
+        closeOrderModal();
+      } catch (error) {
+        console.error("訂單發送失敗:", error);
+        showToast("⚠️ 網路連線忙碌中，但我們已將您的訂單存在瀏覽器，或請稍後再試一次！", 'error');
+      } finally {
+        // 恢復按鈕狀態
+        submitBtn.disabled = false;
+        btnText.classList.remove('hidden');
+        spinner.classList.add('hidden');
+      }
+    }
+
+    // ----------------------------------------
+    // 處理：LINE 領券提交 (LINE Submit)
+    // ----------------------------------------
+    async function handleLineSubmit(event) {
+      event.preventDefault();
+
+      const lineId = document.getElementById('line-id').value;
+
+      const submitBtn = document.getElementById('line-submit-btn');
+      const btnText = document.getElementById('line-btn-text');
+      const spinner = document.getElementById('line-spinner');
+
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      spinner.classList.remove('hidden');
+
+      const couponPayload = {
+        line_id: lineId,
+        coupon_code: 'DESSERT85', // 預設 85 折優惠券代碼
+        created_at: new Date().toISOString()
+      };
+
+      try {
+        if (COUPON_API_URL.includes("your-backend-api.com")) {
+          console.log("[模擬傳送] LINE ID 資訊:", couponPayload);
+          await new Promise(resolve => setTimeout(resolve, 1200));
+        } else {
+          await sendRequestWithRetry(COUPON_API_URL, couponPayload);
+        }
+
+        // 成功處理
+        showToast(`🎁 領取成功！專屬優惠券 [DESSERT85] 已發送至 LINE ID: ${lineId}`, 'success');
+        document.getElementById('line-form').reset();
+        closeLineModal();
+      } catch (error) {
+        console.error("LINE 資料發送失敗:", error);
+        showToast("⚠️ 優惠券系統忙碌中，請重新嘗試一次！", 'error');
+      } finally {
+        submitBtn.disabled = false;
+        btnText.classList.remove('hidden');
+        spinner.classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
